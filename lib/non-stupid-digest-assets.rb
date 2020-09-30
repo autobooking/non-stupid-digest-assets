@@ -27,20 +27,28 @@ module NonStupidDigestAssets
       NonStupidDigestAssets.assets(assets).each do |(logical_path, digest_path)|
         full_digest_path = File.join dir, digest_path
         full_digest_gz_path = "#{full_digest_path}.gz"
+        full_digest_br_path = "#{full_digest_path}.br"
         full_non_digest_path = File.join dir, logical_path
         full_non_digest_gz_path = "#{full_non_digest_path}.gz"
+        full_non_digest_br_path = "#{full_non_digest_path}.br"
 
         if File.exists? full_digest_path
-          logger.debug "Writing #{full_non_digest_path}"
+          logger.info "Writing #{full_non_digest_path}"
           FileUtils.copy_file full_digest_path, full_non_digest_path, :preserve_attributes
         else
           logger.debug "Could not find: #{full_digest_path}"
         end
         if File.exists? full_digest_gz_path
-          logger.debug "Writing #{full_non_digest_gz_path}"
+          logger.info "Writing #{full_non_digest_gz_path}"
           FileUtils.copy_file full_digest_gz_path, full_non_digest_gz_path, :preserve_attributes
         else
           logger.debug "Could not find: #{full_digest_gz_path}"
+        end
+        if File.exists? full_digest_br_path
+          logger.info "Writing #{full_non_digest_br_path}"
+          FileUtils.copy_file full_digest_br_path, full_non_digest_br_path, :preserve_attributes
+        else
+          logger.debug "Could not find: #{full_digest_br_path}"
         end
       end
       paths
